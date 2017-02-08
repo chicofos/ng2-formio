@@ -35,17 +35,22 @@ export class FormioComponent implements OnInit {
         this.invalid = this.events.onInvalid;
     }
     ngOnInit() {
-        this.options = Object.assign({
-            errors: {
-                message: 'Please fix the following errors before submitting.'
-            },
-            alerts: {
-                submitMessage: 'Submission Complete.'
-            },
-            hooks: {
-                beforeSubmit: null
-            }
-        }, this.options);
+        debugger;
+        // this.options = Object.assign({
+        //     errors: {
+        //         message: 'Please fix the following errors before submitting.'
+        //     },
+        //     alerts: {
+        //         submitMessage: 'Submission Complete.'
+        //     },
+        //     hooks: {
+        //         beforeSubmit: null
+        //     }
+        // }, this.options);
+
+        this.options = JSON.parse(this.options.toString());
+        this.options.hooks.beforeSubmit = eval("("+this.options.hooks.beforeSubmit+")");
+
 
         if (this.form) {
             this.ready.next(true);
@@ -125,10 +130,13 @@ export class FormioComponent implements OnInit {
 
         // If they provide a beforeSubmit hook, then allow them to alter the submission asynchronously
         // or even provide a custom Error method.
+        debugger;
         if (this.options.hooks.beforeSubmit) {
             this.options.hooks.beforeSubmit(submission, (err: FormioError, sub:Object) => {
                 if (err) {
-                    this.events.errors.push(err);
+                     err.message = 'Text field is not correct.';
+                     this.events.errors.push(err);
+                     this.events.onSubmit.emit();
                     return;
                 }
                 this.submitForm(sub);

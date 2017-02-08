@@ -1,4 +1,4 @@
-<formio src="https://lyozsrwunugzxwe.form.io/panel" (render)="onRender()" (submit)="onSubmit($event)" (change)="onChange($event)"></formio>
+<!--<formio src="https://lyozsrwunugzxwe.form.io/panel" (render)="onRender()" (submit)="onSubmit($event)" (change)="onChange($event)"></formio>-->
 
 <!--<formio src="https://examples.form.io/example" [submission]='{
   "data": {
@@ -10,3 +10,17 @@
 
 
 <!--<formio [form]="form" [submission]="submission" (render)="onRender()" (submit)="onSubmit($event)" (change)="onChange($event)"></formio>-->
+
+<formio src='https://wxbqvpwlimrczwd.form.io/simpleform2' options='
+ {
+  "errors": {
+    "message": "Please fix the following errors before submitting."
+  },
+  "alerts": {
+    "submitMessage": "Submission Complete."
+  },
+  "hooks": {
+    "beforeSubmit": "function(submission, callback) {  var settings={async:!1,crossDomain:!0,url:\"http://mockbin.org/bin/f1a7d8f7-a036-4a7c-96a9-8f851afaa50f?foo=bar&foo=baz\",method:\"POST\",data:{foo:\"bar\"}};$.ajax(settings).done(function(a){callback(null,submission)});}"
+  }
+}
+'> </formio>
